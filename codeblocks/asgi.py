@@ -1,5 +1,5 @@
 """
-ASGI config for codeblocks project.
+ASGI config for codebook project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'codeblocks.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'codebook.settings')
 
 application = get_asgi_application()
