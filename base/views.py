@@ -12,7 +12,7 @@ import openai
 from djangocodemirror.settings import *
 
 
-openai.api_key = "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"
+openai.api_key = "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"
 
 # Create your views here.
 def index(request):
