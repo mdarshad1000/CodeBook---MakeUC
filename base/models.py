@@ -54,6 +54,7 @@ class Comment(models.Model):
         return self.body
 
 
+
 class Explain(models.Model):
     explain = models.TextField(max_length=4000)
 
@@ -69,4 +70,3 @@ class Translate(models.Model):
 
     def __str__(self):
         return self.translate
-
