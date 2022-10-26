@@ -40,8 +40,18 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'base.apps.BaseConfig', # Add the base app
-    'djangocodemirror' # Add Code Mirror
+    'djangocodemirror', # Add Code Mirror
+
+    'cloudinary_storage',
+    'cloudinary',
+    'whitenoise.runserver_nostatic',
 ]
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dulzpnagm',
+    'API_KEY': '495318873935644',
+    'API_SECRET': '9Cru-7BMWy6Ckc1YT7odwWpNgWY'
+}
 
 # To specify the model we are using
 AUTH_USER_MODEL = 'base.User'
@@ -55,6 +65,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = 'codeblocks.urls'
@@ -134,6 +145,8 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_STORAGE="whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
