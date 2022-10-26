@@ -9,7 +9,7 @@
       </li>
       {% for language in languages %}
       <li>
-        <a href="{% url 'home' %}?q={{language.name|urlencode}}"><img src ="{% static 'images/' %}{{language.name|urlencode}}.svg" style="width: 32px; height:32 px;">{{language}} <span>{{language.snippet_set.count}}</span></a>
+        <a href="{% url 'home' %}?q={{language.name|urlencode}}"><img src ="{% static 'images/' %}{{language.name|urlencode|lower}}.svg" style="width: 32px; height:32 px;">{{language}} <span>{{language.snippet_set.count}}</span></a>
       </li>
       {% endfor %}
     </ul>
