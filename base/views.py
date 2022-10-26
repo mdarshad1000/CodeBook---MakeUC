@@ -8,12 +8,13 @@ from django.contrib.auth import authenticate, login, logout
 
 # from codecarbon import EmissionsTracker
 import openai
-
+import os
+from dotenv import load_dotenv
 from djangocodemirror.settings import *
+load_dotenv()
 
 
-
-openai.api_key = "enter your apiKey here"
+openai.api_key = os.getenv('OPENAI_API_KEY')
 
 # Create your views here.
 def index(request):
@@ -201,7 +202,7 @@ def codeExplain(request):
         answer = openai.Completion.create(
         model="text-davinci-002",
         prompt="Explain what does the following code do:\n"+str(Explain.objects.last()),
-        temperature=0.3,
+        temperature=0,
         max_tokens=1000,
         top_p=1,
         frequency_penalty=0,
@@ -213,9 +214,6 @@ def codeExplain(request):
         return render(request, 'base/explain.html', context)
     context = {'form':form}
     return render(request, 'base/explain.html', context)
-
-
-
 
 
 def codeTranslate(request):
