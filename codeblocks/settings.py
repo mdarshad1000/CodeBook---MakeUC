@@ -28,10 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
-CSRF_TRUSTED_ORIGINS=[
-    "https://codebook-makeuc-production.up.railway.app/login/",
-    "https://codebook-makeuc-production.up.railway.app/register/"
-    ]
+CSRF_TRUSTED_ORIGINS=["https://codebook-makeuc-production.up.railway.app"]
+
 # Application definition
 
 INSTALLED_APPS = [
