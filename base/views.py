@@ -248,3 +248,4 @@ def codeTranslate(request):
 
     context = {'form':form}
     return render(request, 'base/translate.html', context)
+

@@ -2,7 +2,6 @@ from django.forms import ModelForm, TextInput
 from .models import Snippet, Translate, User, Explain
 from django.contrib.auth.forms import UserCreationForm
 
-
 # Creating form based on the db models
 class MyUserCreationForm(UserCreationForm):
     class Meta:
