@@ -88,7 +88,7 @@ def home(request):
 
         res = request.GET.get('res')
         reply = openai.Completion.create(
-        model="text-davinci-002",
+        model="text-davinci-003",
         prompt=res,
         temperature=0.3,
         max_tokens=60,
@@ -171,7 +171,7 @@ def autoCode(request):
     if request.GET.get('p'):
         p = request.GET.get('p')
         response = openai.Completion.create(
-            model="text-davinci-002",
+            model="text-davinci-003",
             prompt=p,
             temperature=0,
             max_tokens=1000 ,
@@ -200,7 +200,7 @@ def codeExplain(request):
         )
 
         answer = openai.Completion.create(
-        model="text-davinci-002",
+        model="text-davinci-003",
         prompt="Explain what does the following code do:\n"+str(Explain.objects.last()),
         temperature=0,
         max_tokens=1000,
@@ -233,7 +233,7 @@ def codeTranslate(request):
         )
         
         answer = openai.Completion.create(
-        model="text-davinci-002",
+        model="text-davinci-003",
         prompt=f"##### Translate this function from {first_language} into {second_language}\n### {first_language}\n\n{translate}\n\n### {second_language}",
         temperature=0.05,
         max_tokens=400,
