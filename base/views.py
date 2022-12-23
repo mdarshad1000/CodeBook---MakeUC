@@ -5,6 +5,7 @@ from .forms import ExplainForm, MyUserCreationForm, TranslateForm, UserForm, Sni
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
+from django.views.decorators.csrf import csrf_protect
 
 # from codecarbon import EmissionsTracker
 import openai
@@ -22,7 +23,7 @@ def index(request):
 
 
 
-
+@csrf_protect
 def loginPage(request):
     page = 'login'
 
@@ -51,6 +52,7 @@ def loginPage(request):
     return render(request, 'base/login_register.html', context)
 
 
+@csrf_protect
 def registerPage(request):
     form = MyUserCreationForm
 
@@ -69,11 +71,13 @@ def registerPage(request):
     return render(request, 'base/login_register.html', context)
 
 
+@csrf_protect
 def logoutPage(request):
     logout(request)
     return redirect('home')
 
 
+@csrf_protect
 def home(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
     snippets = Snippet.objects.filter(Q(language__name__icontains=q) |
@@ -128,6 +132,7 @@ def snippet(request, pk):
     return render(request, 'base/snippet.html', context)
 
 
+@csrf_protect
 @login_required(login_url='login')
 def createSnippet(request):
     form = SnippetForm()
@@ -152,6 +157,7 @@ def createSnippet(request):
     return render(request, 'base/create_snippet.html', context)
 
 
+@csrf_protect
 @login_required(login_url='login')
 def deleteSnippet(request, pk):
     snippet = Snippet.objects.get(id=pk)
@@ -166,6 +172,7 @@ def deleteSnippet(request, pk):
     return render(request, 'base/delete.html', {'obj':snippet})
 
 
+@csrf_protect
 @login_required(login_url='login')
 def autoCode(request):
     if request.GET.get('p'):
@@ -187,6 +194,7 @@ def autoCode(request):
     return render(request, 'base/autocode.html', context)
 
 
+@csrf_protect
 def codeExplain(request):
     form = ExplainForm
     explain = Explain.objects.all()
@@ -220,6 +228,7 @@ def codeExplain(request):
     return render(request, 'base/explain.html', context)
 
 
+@csrf_protect
 def codeTranslate(request):
     form = TranslateForm
     get_translate = Translate.objects.all()
