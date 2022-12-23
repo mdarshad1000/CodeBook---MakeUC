@@ -172,7 +172,7 @@ def autoCode(request):
         p = request.GET.get('p')
         response = openai.Completion.create(
             model="text-davinci-003",
-            prompt=p,
+            prompt=f"The user is novice to programming. Write a code for the following prompt:\n\n{p}",
             temperature=0,
             max_tokens=1000 ,
             top_p=1,
@@ -201,7 +201,7 @@ def codeExplain(request):
 
         answer = openai.Completion.create(
         model="text-davinci-003",
-        prompt="Explain what does the following code do:\n"+str(Explain.objects.last()),
+        prompt="The user is a novice in coding. Explain the following code:\n"+str(Explain.objects.last()),
         temperature=0,
         max_tokens=1000,
         top_p=1,
@@ -234,7 +234,7 @@ def codeTranslate(request):
         
         answer = openai.Completion.create(
         model="text-davinci-003",
-        prompt=f"##### Translate this function from {first_language} into {second_language}\n### {first_language}\n\n{translate}\n\n### {second_language}",
+        prompt=f"##### The user is a novice to programming in {second_language}. Translate the following code from {first_language} into {second_language}\n### {first_language}\n\n{translate}\n\n### {second_language}",
         temperature=0.05,
         max_tokens=400,
         top_p=1,
