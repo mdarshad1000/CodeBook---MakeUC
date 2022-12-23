@@ -93,7 +93,7 @@ def home(request):
         res = request.GET.get('res')
         reply = openai.Completion.create(
         model="text-davinci-003",
-        prompt=res,
+        prompt=f"You are a chatbot who only answers questions about coding, computer science and related fields and don't entertain other questions. Answer the following question:\n\n{res}",
         temperature=0.3,
         max_tokens=60,
         top_p=1,
