@@ -201,7 +201,7 @@ def codeExplain(request):
 
         answer = openai.Completion.create(
         model="text-davinci-003",
-        prompt="The user is a novice in coding. Explain the following code:\n"+str(Explain.objects.last()),
+        prompt="The user is a novice in coding. Explain the following code. Use bullet points if the explanation is elaborate:\n"+str(Explain.objects.last()),
         temperature=0,
         max_tokens=1000,
         top_p=1,
@@ -210,6 +210,10 @@ def codeExplain(request):
         )
 
         final_answer = answer["choices"][0]["text"].lstrip()
+        print(final_answer)
+
+        # To reload the page with prefilled form
+        form = ExplainForm(initial={'explain':f'{str(Explain.objects.last())}'})
         context = {'form':form, 'explain':explain, 'final_answer':final_answer}
         return render(request, 'base/explain.html', context)
     context = {'form':form}
@@ -234,7 +238,7 @@ def codeTranslate(request):
         
         answer = openai.Completion.create(
         model="text-davinci-003",
-        prompt=f"##### The user is a novice to programming in {second_language}. Translate the following code from {first_language} into {second_language}\n### {first_language}\n\n{translate}\n\n### {second_language}",
+        prompt=f"##### The user is a novice to programming. Translate the following code from {first_language} into {second_language}\n### {first_language}\n\n{translate}\n\n### {second_language}",
         temperature=0.05,
         max_tokens=400,
         top_p=1,
@@ -242,6 +246,18 @@ def codeTranslate(request):
         presence_penalty=0
         )
         final_answer = answer["choices"][0]["text"].lstrip()
+
+        # To access the latest field values from the database
+        latest_object = Translate.objects.latest('id')
+        translate_from = latest_object.first_language
+        translate_to = latest_object.second_language
+        code = latest_object.translate
+
+        # print(a)
+        # print(b)
+        # print(c)
+        form = TranslateForm(initial={'first_language':f'{translate_from}','second_language':f'{translate_from}', 'translate':f'{code}' })
+
         context = {'form':form, 'final_answer':final_answer}
 
         return render(request, 'base/translate.html', context)
