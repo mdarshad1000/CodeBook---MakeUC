@@ -1,7 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from sqlalchemy import null
-
 
 
 # Create your models here.

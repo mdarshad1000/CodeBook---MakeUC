@@ -23,7 +23,6 @@ def index(request):
 
 
 
-@csrf_protect
 def loginPage(request):
     page = 'login'
 
@@ -52,7 +51,7 @@ def loginPage(request):
     return render(request, 'base/login_register.html', context)
 
 
-@csrf_protect
+
 def registerPage(request):
     form = MyUserCreationForm
 
@@ -71,13 +70,13 @@ def registerPage(request):
     return render(request, 'base/login_register.html', context)
 
 
-@csrf_protect
+
 def logoutPage(request):
     logout(request)
     return redirect('home')
 
 
-@csrf_protect
+
 def home(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
     snippets = Snippet.objects.filter(Q(language__name__icontains=q) |
@@ -132,7 +131,7 @@ def snippet(request, pk):
     return render(request, 'base/snippet.html', context)
 
 
-@csrf_protect
+
 @login_required(login_url='login')
 def createSnippet(request):
     form = SnippetForm()
@@ -157,7 +156,7 @@ def createSnippet(request):
     return render(request, 'base/create_snippet.html', context)
 
 
-@csrf_protect
+
 @login_required(login_url='login')
 def deleteSnippet(request, pk):
     snippet = Snippet.objects.get(id=pk)
@@ -172,8 +171,8 @@ def deleteSnippet(request, pk):
     return render(request, 'base/delete.html', {'obj':snippet})
 
 
-@csrf_protect
-@login_required(login_url='login')
+
+
 def autoCode(request):
     if request.GET.get('p'):
         p = request.GET.get('p')
@@ -194,7 +193,7 @@ def autoCode(request):
     return render(request, 'base/autocode.html', context)
 
 
-@csrf_protect
+
 def codeExplain(request):
     form = ExplainForm
     explain = Explain.objects.all()
@@ -209,7 +208,7 @@ def codeExplain(request):
 
         answer = openai.Completion.create(
         model="text-davinci-003",
-        prompt="The user is a novice in coding. Explain the following code. Use bullet points if the explanation is elaborate:\n"+str(Explain.objects.last()),
+        prompt="The user is a novice in programming. Explain the following code in detail. Use bullet points if required\n\n"+str(Explain.objects.last()),
         temperature=0,
         max_tokens=1000,
         top_p=1,
@@ -228,7 +227,7 @@ def codeExplain(request):
     return render(request, 'base/explain.html', context)
 
 
-@csrf_protect
+
 def codeTranslate(request):
     form = TranslateForm
     get_translate = Translate.objects.all()
@@ -247,9 +246,9 @@ def codeTranslate(request):
         
         answer = openai.Completion.create(
         model="text-davinci-003",
-        prompt=f"##### The user is a novice to programming. Translate the following code from {first_language} into {second_language}\n### {first_language}\n\n{translate}\n\n### {second_language}",
+        prompt=f"##### The user is a novice to programming. Translate the following code from {first_language} into {second_language}. Translate the code such the translated code is ready to be executed.\n### {first_language}\n\n{translate}\n\n### {second_language}\n\n",
         temperature=0.05,
-        max_tokens=400,
+        max_tokens=800,
         top_p=1,
         frequency_penalty=0,
         presence_penalty=0
@@ -265,7 +264,7 @@ def codeTranslate(request):
         # print(a)
         # print(b)
         # print(c)
-        form = TranslateForm(initial={'first_language':f'{translate_from}','second_language':f'{translate_from}', 'translate':f'{code}' })
+        form = TranslateForm(initial={'first_language':f'{translate_from}','second_language':f'{translate_to}', 'translate':f'{code}' })
 
         context = {'form':form, 'final_answer':final_answer}
 
